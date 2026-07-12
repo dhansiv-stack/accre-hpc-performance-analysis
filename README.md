@@ -14,8 +14,6 @@ The analysis integrates three operational datasets from Vanderbilt University's 
 - **slurm_wrapper_ce5.log** – Scheduler command logs from the CE5 gateway.
 - **slurm_wrapper_ce6.log** – Scheduler command logs from the CE6 gateway.
 
-Detailed descriptions of the datasets and variables are available in `data_dictionary.md`.
-
 ---
 
 ## Project Objectives
