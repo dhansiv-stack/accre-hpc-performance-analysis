@@ -1,66 +1,122 @@
-## The Advanced Computing Center for Research and Education
+# ACCRE HPC Performance Analysis
 
-**Project Overview**
-The Advanced Computing Center for Research and Education (ACCRE) operates Vanderbilt University's high-performance computing cluster. Jobs submitted to ACCRE are managed by the [slurm scheduler](https://slurm.schedmd.com/documentation.html), which tracks compute and memory resources.
+## Project Overview
 
-ACCRE staff have hypothesized that the scheduler sometimes becomes unresponsive because it is processing large bursts of job completions. This especially affects automated job submitters, such as members of the Open Science Grid.
+This project analyzes operational data from Vanderbilt University's Advanced Computing Center for Research and Education (ACCRE) High-Performance Computing (HPC) cluster to investigate whether bursts of completed Slurm jobs contribute to scheduler unresponsiveness.
 
-Your goal is to evaluate whether the data supports the hypothesis of bursts of job completions contributing to scheduler unresponsiveness.
+The analysis integrates large-scale Slurm job records with scheduler log files to identify unresponsive events, engineer analysis-ready features, and evaluate the relationship between workload patterns and scheduler performance using statistical analysis and data visualization.
 
-You are provided three datasets:  
-* fullsample.csv: Contains slurm job records. Job completions correspond to jobs in the "COMPLETED" state with exit code "0:0".  
-* slurm_wrapper_ce5.log, slurm_wrapper_ce6.log: These log files contain every slurm command executed by the CE5 and CE6 servers (gateways to the Open Science Grid).  
-Unresponsive periods are indicated by "sbatch" commands from user 9204 that have:  
-    * return code = 1
-    * execution time > 15 seconds
+## Dataset Overview
 
-**Phase 1: Explore the Data**  
-Objectives:  
-* Understand the purpose of each dataset.  
-* Inspect column types, sizes, and example rows.  
+The analysis integrates three operational datasets from Vanderbilt University's ACCRE HPC environment:
 
-Notebook Sections:  
-* Code: Load each dataset, preview rows, summarize columns.  
-* Markdown: Notes on data quality and initial observations.  
+- **fullsample.csv** – Slurm job execution records.
+- **slurm_wrapper_ce5.log** – Scheduler command logs from the CE5 gateway.
+- **slurm_wrapper_ce6.log** – Scheduler command logs from the CE6 gateway.
 
-**Phase 2: Clean and Transform the Data**  
-Objectives:  
-* Extract job completions from fullsample.csv.  
-* Parse CE5 and CE6 logs to identify unresponsive events.  
-* Create analysis-ready features (time windows, completion counts, unresponsiveness indicators).  
-* Optionally include other features (currently running jobs or resource usage, time-of-day).  
+Detailed descriptions of the datasets and variables are available in `data_dictionary.md`.
 
-Notebook Sections:  
-* Code: Filtering and transforming datasets.  
-* Markdown: Document preprocessing steps and reasoning.  
-* Code: Combine datasets into a single dataset suitable for analysis.
+---
 
-**Phase 3: Analyze and Visualize**  
-Objectives:  
-* Explore the relationship between job completions and unresponsiveness.  
-* Create visualizations and basic summary statistics.  
+## Project Objectives
 
-Notebook Sections:  
-* Code: Time-series plots, scatterplots, boxplots, summary statistics.
-* Markdown: Interpret the visualizations and describe patterns.  
-* Code: Fit a simple logistic regression to test the hypothesis.
-* Markdown: Summarize the results and draw conclusions from the model.  
-* Optional: Explore additional factors (eg. day of week).
+- Analyze HPC scheduler performance using operational cluster data.
+- Identify completed Slurm jobs and scheduler unresponsive events.
+- Clean and integrate multiple large-scale datasets.
+- Engineer features suitable for statistical analysis.
+- Evaluate whether bursts of job completions increase the likelihood of scheduler unresponsiveness.
 
-**Phase 4: Interpret and Conclude**  
-Objectives:  
-* Answer the main question: Does the data support the hypothesis that the slurm scheduler is more likely to be unresponsive during bursts of job completions?  
-* Summarize findings and limitations.  
+---
 
-Notebook Sections:    
-* Markdown: Summarize evidence for or against the hypothesis.  
-* Markdown: Provide a clear conclusion.  
+## Project Workflow
 
-**Final Deliverable:**
-A single Jupyter notebook that includes:  
-1. Introduction & dataset overview  
-2. Data exploration & cleaning  
-3. Feature engineering  
-4. Analysis & visualizations  
-5. Interpretation & conclusion
+```text
+Slurm Job Records
+        │
+        ├──────────────┐
+        │              │
+        ▼              ▼
+  CE5 Scheduler Logs  CE6 Scheduler Logs
+        │              │
+        └──────┬───────┘
+               ▼
+      Data Cleaning & Parsing
+               │
+               ▼
+      Feature Engineering
+               │
+               ▼
+     Exploratory Data Analysis
+               │
+               ▼
+     Statistical Modeling
+     (Logistic Regression)
+               │
+               ▼
+   Performance Analysis &
+      Hypothesis Testing
+```
 
+---
+
+## Technologies Used
+
+- Python
+- pandas
+- NumPy
+- Matplotlib
+- Statsmodels
+- Logistic Regression
+- High-Performance Computing (HPC)
+- Slurm Workload Manager
+
+---
+
+## Skills Demonstrated
+
+- Data Cleaning
+- Feature Engineering
+- Exploratory Data Analysis (EDA)
+- Statistical Modeling
+- Logistic Regression
+- HPC Log Analysis
+- Performance Analytics
+- Scientific Data Interpretation
+
+---
+
+## Key Features
+
+- Processed over seven million Slurm job records.
+- Parsed and combined scheduler log files from multiple compute gateways.
+- Identified scheduler unresponsive events using predefined operational criteria.
+- Engineered analysis-ready features from heterogeneous datasets.
+- Applied logistic regression to evaluate the relationship between job completion bursts and scheduler responsiveness.
+- Produced visualizations and statistical summaries to support hypothesis testing.
+
+---
+
+## Repository Contents
+
+```text
+├── README.md
+├── notebooks/
+│   ├── Data_Introduction.ipynb
+│   └── ACCRE_HPC_Performance_Analysis.ipynb
+├── ACCRE Introduction.pdf
+└── data_dictionary.md
+```
+
+> **Note:** The original datasets are not included in this repository because of their large size. The notebooks assume the required data files are available locally.
+---
+
+## Future Improvements
+
+- Develop predictive models for scheduler unresponsiveness.
+- Incorporate additional resource utilization metrics.
+- Evaluate temporal trends and seasonal workload patterns.
+- Build an interactive dashboard for HPC performance monitoring.
+
+---
+
+**Author:** Sivaraja Vaithiyalingam
